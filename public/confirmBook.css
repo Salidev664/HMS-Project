@@ -1,0 +1,340 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: rgb(223, 241, 251);
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(46, 75, 75);
+    margin: 0;
+    overflow-x: hidden;
+}
+
+section {
+    height: auto;
+    width: 95%;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+section:hover {
+    box-shadow: 0 0 10px rgb(159, 165, 165);
+    border: 1px solid rgb(156, 169, 169);
+}
+
+/* HEADER */
+.headar {
+    text-align: center;
+    padding: 15px 10px;
+}
+
+.round-correct {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background: rgb(57, 87, 87);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.round-correct i {
+    font-size: 27px;
+}
+
+/* MAIN APPOINTMENT DETAILS */
+.main {
+    height: auto;
+    width: 80%;
+    border-radius: 15px;
+    background: white;
+    margin: 10px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.main h3 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+    margin: 0 22px;
+}
+
+/* DOCTOR / DATE / TIME */
+.store-doctor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    border-radius: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: 0.3s ease-in-out;
+}
+
+.store-doctor:hover {
+    transform: scale(1.02);
+    box-shadow: 1px 1px 5px rgb(128, 145, 145);
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.right {
+    text-align: right;
+}
+
+.right h5 {
+    color: rgb(2, 103, 2);
+}
+
+.names h5,
+.names p {
+    margin: 0;
+}
+
+/* REASON */
+.store-text {
+    height: auto;
+    width: 100%;
+    border-radius: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: 0.3s ease-in-out;
+}
+
+.store-text:hover {
+    transform: scale(1.02);
+    box-shadow: 1px 1px 5px rgb(128, 145, 145);
+}
+
+/* IMPORTANT NOTE */
+main {
+    background-color: rgb(186, 203, 246);
+    height: auto;
+    width: 80%;
+    border-radius: 15px;
+    margin: 10px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.flex-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.note {
+    height: 30px;
+    width: 30px;
+    min-width: 30px;
+    border-radius: 50%;
+    background: rgb(46, 75, 75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.note-content h5,
+.note-content p {
+    margin-top: 0;
+}
+
+/* BUTTON SECTION */
+.myButton {
+    margin: 30px auto;
+    min-height: 70px;
+    width: 80%;
+    border-radius: 15px;
+    background: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    box-sizing: border-box;
+}
+
+.back,
+.forward {
+    min-height: 45px;
+    border-radius: 10px;
+    padding: 8px 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.back {
+    width: 250px;
+    border: 1px solid rgb(46, 75, 75);
+    background: white;
+}
+
+.forward {
+    width: 300px;
+    border: none;
+    background: rgb(46, 75, 75);
+}
+
+/* BUTTON LINKS */
+.back a,
+.forward a {
+    font-size: 18px;
+    text-decoration: none;
+    margin: 0;
+}
+
+.back a {
+    color: rgb(46, 75, 75);
+}
+
+.forward a {
+    color: white;
+}
+
+.back:hover {
+    background-color: rgb(46, 75, 75);
+}
+
+.back:hover a,
+.back:hover i {
+    color: white;
+}
+
+.forward:hover {
+    background: rgb(223, 241, 251);
+}
+
+.forward:hover a,
+.forward:hover i {
+    color: rgb(46, 75, 75);
+}
+
+.back i,
+.forward i {
+    font-size: 20px;
+}
+
+/* TABLET */
+@media screen and (max-width: 1024px) {
+
+    .main,
+    main,
+    .myButton {
+        width: 90%;
+    }
+
+}
+
+/* MOBILE */
+@media screen and (max-width: 768px) {
+
+    section {
+        width: 94%;
+        margin: 10px auto;
+        padding: 5px;
+    }
+
+    .header-content h1 {
+        font-size: 28px;
+    }
+
+    .header-content p {
+        font-size: 14px;
+    }
+
+    .main,
+    main {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .main h3 {
+        margin: 0 5px 10px;
+        font-size: 21px;
+    }
+
+    .store-doctor {
+        padding: 8px 5px;
+        width: 100%;
+    }
+
+    .left {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .right h5,
+    .names h5,
+    .names p {
+        font-size: 14px;
+    }
+
+    .flex-note {
+        gap: 10px;
+    }
+
+    .note-content h5 {
+        font-size: 16px;
+    }
+
+    .note-content p {
+        font-size: 13px;
+    }
+
+    /* BUTTONS STACK */
+    .myButton {
+        width: 100%;
+        padding: 10px;
+        flex-direction: column;
+        background: transparent;
+    }
+
+    .back,
+    .forward {
+        width: 100%;
+        margin: 0;
+    }
+
+    .back a,
+    .forward a {
+        font-size: 15px;
+    }
+}
+
+/* VERY SMALL PHONES */
+@media screen and (max-width: 400px) {
+
+    .header-content h1 {
+        font-size: 24px;
+    }
+
+    .header-content p {
+        font-size: 13px;
+    }
+
+    .store-doctor {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .right {
+        text-align: left;
+        padding-left: 40px;
+    }
+
+    .myButton {
+        padding: 5px;
+    }
+}

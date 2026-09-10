@@ -1,0 +1,273 @@
+html{
+    scroll-behavior: smooth;
+}
+body{
+    background: rgb(231, 244, 250);
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 100px;
+    margin: 0;
+    overflow-x: hidden;
+}
+#medicare{
+    color: rgb(119, 117, 117);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+    margin: 0 15px;
+    text-shadow: 0px 0px 20px white;
+}
+#medicare:hover{
+    background: rgb(185, 188, 190);
+    border-radius: 15px;
+    padding: 5px;
+    text-shadow: 0 0 20px white;
+}
+.nav-ul{
+    gap: 20px;
+    
+}
+.nav-ul li a{border-radius: 15px;}
+
+.nav-ul li:hover{
+  background: rgb(232, 244, 245); 
+  transition: .5s ease-in-out;
+  border-radius: 10px;
+}
+.navi{
+    position: fixed;
+    margin: 0;
+    top: 0;
+    width: 100%;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    background: rgb(140, 209, 247);
+    z-index: 400;
+    backdrop-filter: blur(5px);
+    background: transparent;
+    flex-wrap: nowrap;
+    
+}
+ .button_log {
+    padding: 10px;
+    justify-content: end;
+    text-align: center;
+    display: flex;
+ }
+ .button_log a{
+    padding: 9px 20px;
+    
+    transition: .7s ease-in-out;
+ }
+ .button_log:hover a{
+    color: white;
+ }
+/*---------call to action  section -------------*/
+.cta{
+    background-image: url("/public/image/download\ \(3\).jpeg");
+    background-repeat: none;
+    background-size: cover;
+    object-fit: cover; 
+    background-position: center;
+    color: white;
+    width: 97%;
+    height: 70vh;
+    margin: 18px;
+    border-radius: 15px;
+    padding: 20px;
+    
+    z-index: 1;
+    position: relative;
+}
+
+
+/*---------search bar section -------------*/
+.search{
+    
+    padding: 10px;
+}
+.search input{
+    width: 90%;
+    padding: 10px;
+    justify-self: end; 
+}
+.search input::placeholder{
+    font-size: 25px;
+    padding: 15px;
+}
+.search i{
+    position: absolute;
+    margin: -40px 360px;
+    font-size: 20px;
+
+}
+
+#search-button{
+   
+    border: none;
+    border-radius: 7px;
+    background-color: rgb(90, 124, 124);
+    color: white;
+    height: 45px;
+    width: 100px;
+}
+#search-button:hover{
+    background: rgb(144, 151, 155);
+}
+.click-search{
+    gap: 10px;
+   
+}
+.imageMod{
+    justify-self: center;
+}
+.imageMod img{
+    
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.imageMod:hover{
+    box-shadow: 0 0 25px  rgb(46, 75, 75);
+    border-radius: 50%;
+    border: 1px solid;
+    border-color: 0 0 25px  rgb(46, 75, 75); 
+}
+/*---------the card section---------*/
+#today-head{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+    color: rgb(46, 75, 75);
+}
+.card{
+    transition: 1s ease-in-out;
+}
+.card:hover{
+    transform: translateY(-5px);
+}
+.card-foot{
+    width: 100%;
+    background-color: rgb(46, 75, 75);
+}
+.image{
+    height: auto;
+}
+.image img{
+    height: 200px;
+    
+}
+.cards{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 30px;
+}
+
+/*--------------process section-------------*/
+#process{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+    color: rgb(46, 75, 75);
+}
+
+.processes{
+    width: 90%;
+    height: 180px;
+    border-radius: 10px;
+    padding: 20px;
+    transition: 1s ease-in-out;
+    
+}
+.processes:hover{
+    border: 1px solid;
+    box-shadow: 2px 2px 30px rgb(201, 216, 216);
+    transform: translateY(-5px);
+}
+
+.processes p{
+    font-size: 16px;
+}
+.row-process{
+    margin-left: 15px;
+}
+#round{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 3px solid;
+    border-color: rgb(46, 75, 75);
+    display: flex;
+    justify-content: center;
+    
+}
+#round p{
+    text-align: center;
+    color: rgb(46, 75, 75);
+    align-self: center;
+    font-size: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow';
+    margin-top: 13px;
+}
+
+/*-----------footer--------*/
+.footer-pcc{
+    gap: 30px;
+}
+.footer-pcc h4:hover{
+    text-decoration: underline;
+    color: rgb(51, 112, 112);
+}
+@media (max-width: 768px){
+    .navi{
+        margin-left: -20px;
+        width: 100%;
+    }
+    .nav-button{
+        padding: 0;
+        margin: 5px 0;
+    }
+
+    .search {
+        margin: 0;
+    }
+    .search input{
+        justify-self: center;
+        
+    }
+    .search i{
+        display: none;
+    }
+    .click-search select, .click-search button{
+        margin: 0 20px;
+    }
+
+    .cards{
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    gap: 30px;
+}
+.processes{
+    margin: 12px 0;
+}
+.copy{
+    justify-self: baseline;
+    margin: 0 30px;
+    display: flex;
+}
+.footer-pcc{
+    margin: 0 30px;
+}
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .nav-ul {
+        margin-top: 12px;
+        gap: 6px;
+    }
+
+    .nav-ul .nav-link {
+        padding: 10px 16px;
+    }
+
+    .navi .btn {
+        margin-top: 12px;
+        width: 100%;
+        text-align: center;
+}
+}
