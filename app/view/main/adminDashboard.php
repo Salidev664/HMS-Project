@@ -16,8 +16,8 @@
     <div>
       <div class="brand">MEDICARE</div>
       <ul class="nav-menu">
-        <li class="nav-item active"><a href="#"><span>🏠</span> <span>Dashboard</span></a></li>
-        <li class="nav-item"><a href="#"><span>👨‍⚕️</span> <span>Doctors</span></a></li>
+        <li class="nav-item active"><a href="?view=adminDashboard"><span>🏠</span> <span>Dashboard</span></a></li>
+        <li class="nav-item"><a href="#doctors"><span>👨‍⚕️</span> <span>Doctors</span></a></li>
         <li class="nav-item"><a href="#"><span>👥</span> <span>Patients</span></a></li>
         <li class="nav-item"><a href="#"><span>📅</span> <span>Appointments</span></a></li>
         <li class="nav-item"><a href="#"><span>📋</span> <span>Records</span></a></li>
@@ -61,7 +61,7 @@
           <div class="stat-icon">👨‍⚕️</div>
           <div class="stat-info">
             <div class="title">Doctors</div>
-            <div class="value">12</div>
+            <div class="value"><?= $doctorCount ?></div>
           </div>
         </div>
 
@@ -69,7 +69,7 @@
           <div class="stat-icon">👥</div>
           <div class="stat-info">
             <div class="title">Patients</div>
-            <div class="value">145</div>
+            <div class="value"><?= $patientCount ?></div>
           </div>
         </div>
 
@@ -86,16 +86,16 @@
           <div class="stat-info">
             <div class="title">Pending</div>
             <div class="value">
-              <?= count(array_filter($appointments, function($a){
-                return $a['status'] === 'pending';
-              })) ?>
+             <?= count(array_filter($appointments, function($a){
+                return $a['status'] === 'Pending';
+                })) ?>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Doctor Management Section -->
-      <section class="section-card">
+      <section class="section-card" id="doctors">
         <div class="section-header">
           <h3>Doctor Management</h3>
          <a href="?view=adminRecDoc"><button class="btn-action">+ Register</button></a>
@@ -127,7 +127,7 @@
       </section>
 
       <!-- Recent Appointments Section -->
-      <section class="section-card">
+      <section class="section-card" id="appointments">
         <div class="section-header">
           <h3>Recent Appointments</h3>
         </div>
@@ -141,18 +141,35 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Salif</td>
-              <td>Dr John</td>
-              <td>15/8</td>
-              <td><span class="badge badge-pending">Pending</span></td>
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Dr Mary</td>
-              <td>15/8</td>
-              <td><span class="badge badge-approved">Approved</span></td>
-            </tr>
+            
+        <?php foreach ($appointments as $appointment): ?>
+  <tr>
+    <td><?= htmlspecialchars($appointment['patient_name']) ?></td>
+    <td><?= htmlspecialchars($appointment['doctor_name'] ?? 'Not assigned') ?></td>
+    <td><?= date('d/m/Y', strtotime($appointment['appointment_date'])) ?></td>
+    <td>
+    <span class="badge <?= $appointment['status'] === 'Pending' ? 'badge-pending' : 'badge-approved' ?>">
+      <?= htmlspecialchars($appointment['status']) ?>
+    </span>
+  </td>
+
+  <td>
+    <?php if($appointment['status'] === 'Pending'): ?>
+        <form method="POST" action="?action=approveAppointment">
+            <input type="hidden" name="appointment_id" value="<?= $appointment['appointment_id'] ?>">
+            <button type="submit" class="btn btn-success btn-sm">
+                Approve
+            </button>
+        </form>
+    <?php else: ?>
+        <span class="text-muted">Approved</span>
+    <?php endif; ?>
+</td>
+</tr>
+<?php endforeach; ?>
+
+
+             
           </tbody>
         </table>
       </section>

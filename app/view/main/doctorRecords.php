@@ -43,6 +43,23 @@ body {
     margin-bottom: 25px;
 }
 
+.reg{
+    display: flex;
+    justify-content: space-between;
+}
+.back-dashboard {
+    border: 1px solid #2e4b4b;
+    padding: 10px 25px;
+    text-decoration: none;
+    border-radius: 20px;
+    color: #2e4b4b;
+}
+
+.back-dashboard:hover {
+    background: #516a6a;
+    color: white;
+}
+
 /* Cards */
 .card {
     border: none;
@@ -161,8 +178,13 @@ body {
 
 <div class="container py-4">
 
-    <h2 class="mb-4">Patient Medical Record</h2>
+    <div class="reg">
 
+        <h2 class="mb-4">Patient Medical Record</h2>
+        <div><a href="?view=doctorDashboard" class="back-dashboard">
+            &larr; Back
+        </a></div>
+    </div>
     <!-- Patient Information -->
     <div class="card mb-4">
 

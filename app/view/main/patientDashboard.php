@@ -566,3 +566,4 @@ include __DIR__ . '/../share/header.php';
     <?php endif; ?>
 
 </div>
+<?= include __DIR__ . '/../share/footer.php' ?>

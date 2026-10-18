@@ -21,47 +21,7 @@ class Manager
         switch ($action) {
 
             /* ---------- LOGIN ---------- */
-            case 'login':
-
-                if (isset($_POST['login'])) {
-
-                    $result = $this->connectModel->loginUser(
-                        $_POST['email'],
-                        $_POST['password']
-                    );
-
-                    if ($result) {
-
-                        if ($result['type'] === 'doctor') {
-                            $_SESSION['doctor_id'] =
-                                $result['user']['doctor_id'];
-
-                            header("Location: ?view=doctorDashboard");
-                            exit;
-                        }
-
-                        if ($result['type'] === 'patient') {
-                            $_SESSION['patient_id'] =
-                                $result['user']['patient_id'];
-
-                            header("Location: ?view=patientDashboard");
-                            exit;
-                        }
-
-                        if ($result['type']=== 'admin') {
-                            $_SESSION['admin_id'] = 
-                            $result['user']['admin_id'];
-
-                            header("location: ?view=adminDashboard");
-                            exit;
-                        }
-                    } else {
-                        echo "Invalid email or password.";
-                    }
-                }
-
-                break;
-
+           
 
             /* ---------- REGISTER PATIENT ---------- */
             case 'registerPatient':
@@ -89,60 +49,105 @@ class Manager
 
 
             /* ---------- SHOW CONFIRMATION PAGE ---------- */
-            case 'confirmBooking':
+           case 'confirmBooking':
 
-                if (!isset($_SESSION['patient_id'])) {
-                    die("Patient is not logged in.");
-                }
+    // 1. Check whether the patient is logged in
+    if (!isset($_SESSION['patient_id'])) {
 
-                if (isset($_POST['book'])) {
+        // Save booking details before redirecting to login
+        if (isset($_POST['book'])) {
+            $_SESSION['pending_booking'] = [
+                'doctor_id' => $_POST['doctor_id'],
+                'appointment_date' => $_POST['appointment_date'],
+                'appointment_time' => $_POST['appointment_time'],
+                'reason' => $_POST['reason']
+            ];
+        }
 
-                    $doctor_id = $_POST['doctor_id'];
-                    $date = $_POST['appointment_date'];
-                    $time = $_POST['appointment_time'];
-                    $reason = $_POST['reason'];
+        header("Location: ?view=login");
+        exit;
+    }
 
-                    $doctor =
-                        $this->connectModel->getDoctorById($doctor_id);
+    // 2. Resume the saved booking after login
+    if (
+        isset($_GET['resumeBooking']) &&
+        isset($_SESSION['pending_booking'])
+    ) {
+        $booking = $_SESSION['pending_booking'];
 
-                    if (!$doctor) {
-                        die("Doctor not found.");
-                    }
+        $doctor = $this->connectModel->getDoctorById(
+            $booking['doctor_id']
+        );
 
-                    $this->display('confirmBook', [
-                        'doctor' => $doctor,
-                        'appointment_date' => $date,
-                        'appointment_time' => $time,
-                        'reason' => $reason
-                    ]);
+        if (!$doctor) {
+            unset($_SESSION['pending_booking']);
+            header("Location: ?view=home");
+            exit;
+        }
 
-                    return;
-                }
+        $this->display('confirmBook', [
+            'doctor' => $doctor,
+            'appointment_date' => $booking['appointment_date'],
+            'appointment_time' => $booking['appointment_time'],
+            'reason' => $booking['reason']
+        ]);
 
+        return;
+    }
 
-                /* ---------- ACTUALLY SAVE ---------- */
+    // 3. Display the appointment review page
+    if (isset($_POST['book'])) {
 
-                if (isset($_POST['confirm_booking'])) {
+        $doctor_id = $_POST['doctor_id'];
+        $date = $_POST['appointment_date'];
+        $time = $_POST['appointment_time'];
+        $reason = $_POST['reason'];
 
-                    $appointment_id =
-                        $this->connectModel->bookAppointment(
-                            $_SESSION['patient_id'],
-                            $_POST['doctor_id'],
-                            $_POST['appointment_date'],
-                            $_POST['appointment_time'],
-                            $_POST['reason']
-                        );
+        $doctor = $this->connectModel->getDoctorById($doctor_id);
 
-                    if ($appointment_id) {
-                        header("Location: ?view=patientDashboard");
-                        exit;
-                    }
+        if (!$doctor) {
+            die("Doctor not found.");
+        }
 
-                    die("Failed to book appointment.");
-                }
+        $this->display('confirmBook', [
+            'doctor' => $doctor,
+            'appointment_date' => $date,
+            'appointment_time' => $time,
+            'reason' => $reason
+        ]);
 
-                break;
+        return;
+    }
 
+    // 4. Save the appointment after final confirmation
+    if (isset($_POST['confirm_booking'])) {
+
+        $doctor_id = $_POST['doctor_id'];
+        $date = $_POST['appointment_date'];
+        $time = $_POST['appointment_time'];
+        $reason = $_POST['reason'];
+
+        $appointment_id = $this->connectModel->bookAppointment(
+            $_SESSION['patient_id'],
+            $doctor_id,
+            $date,
+            $time,
+            $reason
+        );
+
+        if ($appointment_id) {
+
+            unset($_SESSION['pending_booking']);
+
+            header("Location: ?view=patientDashboard");
+            exit;
+
+        } else {
+            die("Failed to book appointment.");
+        }
+    }
+
+    break;
 
             /* ---------- SAVE MEDICAL RECORD ---------- */
             case 'doctorRecords':
@@ -214,25 +219,32 @@ class Manager
                 }
 
                 break;
-        }
+
+                case 'approveAppointment':
+                  if(!isset($_SESSION['admin_id'])){
+                  die("Admin is not logged in");
+               }
+
+                 $appointment_id = $_POST['appointment_id'];
+
+                 $this->connectModel->approveAppointment($appointment_id);
+
+                 header("Location: ?view=adminDashboard");
+                 exit;
+              }
 
 
         /* ================= VIEWS ================= */
 
-        $view = $_GET['view'] ?? 'login';
+        $view = $_GET['view'] ?? 'home';
 
 
         switch ($view) {
 
             /* ---------- HOME ---------- */
-            case 'home':
+            case 'login':
 
-                $doctors =
-                    $this->connectModel->getDoctors();
-
-                $this->display('home', [
-                    'doctors' => $doctors
-                ]);
+                $this->display('login');
 
                 break;
 
@@ -304,10 +316,17 @@ class Manager
                     $this->connectModel
                     ->getDoctorPrescriptions($doctor_id);
 
+                $patients = 
+                    $this->connectModel->listPatients();
+                $countPatient = $this->connectModel->countPatients();
+                
+
                 $this->display('doctorDashboard', [
                     'appointments' => $appointments,
                     'myAppointments' => $appointments,
-                    'prescriptions' => $prescriptions
+                    'prescriptions' => $prescriptions,
+                    'patients' => $patients,
+                    'countPatient' => $countPatient
                 ]);
 
                 break;
@@ -421,7 +440,9 @@ class Manager
                 $appointments = 
                 $this->connectModel
                         ->getAdminAppointments($admin_id);
-                 
+
+                $doctorCount = $this->connectModel->countDoctors();      
+                $patientCount = $this->connectModel->countPatients();
                 $pending = 0;
            
 
@@ -434,7 +455,9 @@ class Manager
 
                 $this->display('adminDashboard', [
                     'admin' => $admin,
-                    'appointments'=> $appointments
+                    'appointments'=> $appointments,
+                    'doctorCount' => $doctorCount,
+                    'patientCount' => $patientCount
                 ]);
                 break;
 
@@ -444,19 +467,24 @@ class Manager
             /* ---------- DEFAULT ---------- */
             default:
 
-                $this->display('login');
+               $doctors =
+                    $this->connectModel->getDoctors();
+
+                $this->display('home', [
+                    'doctors' => $doctors
+                ]);
 
                 break;
         }
     }
 
 
-    public function display($view = 'login', $data = [])
+    public function display($view = 'home', $data = [])
     {
         extract($data);
 
-        if ($view === 'login') {
-            include __DIR__ . '/../view/main/login.php';
+        if ($view === 'home') {
+            include __DIR__ . '/../view/main/home.php';
         } else {
             include __DIR__ . '/../view/main/' . $view . '.php';
         }

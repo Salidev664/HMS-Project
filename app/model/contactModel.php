@@ -21,6 +21,22 @@ class ContactModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    
+    // COUNT DOCTORS
+public function countDoctors()
+{
+    $stmt = $this->db->prepare("SELECT COUNT(*) FROM doctor");
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+
+// COUNT PATIENTS
+public function countPatients()
+{
+    $stmt = $this->db->prepare("SELECT COUNT(*) FROM patient");
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
     // GET DOCTOR BY ID
     public function getDoctorById($doctor_id)
     {
@@ -265,28 +281,43 @@ class ContactModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function listPatients(){
+
+    $sql = "
+        SELECT * from patient";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchALL(PDO::FETCH_ASSOC);
+    }
     //GET APPOINTMENT FOR ADMIN LET HIS SEEEE😣
     public function getAdminAppointments($admin_id){
          $sql = "
             SELECT
                 a.appointment_id,
-                a.appointment_date,
-                a.appointment_time,
-                a.reason,
-                a.status,
-                p.username AS patient_name
-            FROM appointment a
-            INNER JOIN patient p
-                ON a.patient_id = p.patient_id
-            WHERE a.admin_id = ?
-            ORDER BY a.appointment_date DESC,
-                     a.appointment_time DESC
+            a.appointment_date,
+            a.appointment_time,
+            a.reason,
+            a.status,
+            p.username AS patient_name,
+            d.username AS doctor_name
+        FROM appointment a
+        INNER JOIN patient p ON a.patient_id = p.patient_id
+        INNER JOIN doctor d ON a.doctor_id = d.doctor_id
+        ORDER BY a.appointment_date DESC, a.appointment_time DESC
         ";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$admin_id]);
+        $stmt->execute([]);
         return $stmt->FetchAll(PDO::FETCH_ASSOC);
     }
+
+    // APPROVE APPOINTMENT
+public function approveAppointment($appointment_id)
+{
+    $sql = "UPDATE appointment SET status = 'Approved' WHERE appointment_id = ?";
+    $stmt = $this->db->prepare($sql);
+    return $stmt->execute([$appointment_id]);
+}
     // GET APPOINTMENT FOR MEDICAL RECORD
     public function getAppointmentForRecord(
         $appointment_id,

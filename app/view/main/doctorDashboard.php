@@ -84,7 +84,7 @@
         <div class="stat-card">
           <div class="stat-icon">📅</div>
           <div class="stat-info">
-            <div class="stat-number">7</div>
+            <div class="stat-number"><?= count($appointments) ?></div>
             <div class="stat-label">Appointments<br>Today</div>
           </div>
         </div>
@@ -92,7 +92,7 @@
         <div class="stat-card">
           <div class="stat-icon">👥</div>
           <div class="stat-info">
-            <div class="stat-number">5</div>
+            <div class="stat-number"><?= $countPatient ?></div>
             <div class="stat-label">Patients<br>Managed</div>
           </div>
         </div>
@@ -280,15 +280,25 @@
             </tr>
           </thead>
           <tbody>
+          <?php if(count($patients) > 0): ?>
+            <?php foreach($patients as $patient): ?>        
             <tr>
-              <td>Daniel</td>
-              <td>Male</td>
-              <td>Sep 10, 2019</td>
-              <td>58233224</td>
+              <td><?= htmlspecialchars($patient['username']) ?></td>
+              <td><?= htmlspecialchars($patient['gender']) ?></td>
+              <td><?= "h:i A",
+                            strtotime($appointment['appointment_time'])
+                  ?>?></td>
+              <td><?= htmlspecialchars($patient['phone']) ?></td>
             </tr>
-          
-           
-          
+              <?php endforeach; ?>
+              <?php else: ?>
+
+                <tr>
+                <td colspan="6" class="text-center">
+                    No appointments found.
+                </td>
+            </tr>
+            <?php endif;?>
           </tbody>
         </table>
       </section>

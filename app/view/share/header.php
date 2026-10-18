@@ -31,10 +31,10 @@
                 <ul class="navbar-nav fs-4  nav-ul">
                     
                     <li class="navbar-item"><a href="?view=home" class="nav-link shadow">Home</a></li>
-                    <li class="navbar-item"><a href="" class="nav-link shadow" onclick="browseDoctor()">Browse Doctor</a></li>
+                    <li class="navbar-item"><a href="#doctor" class="nav-link shadow">Browse Doctor</a></li>
                     <li class="navbar-item"><a href="?view=patientDashboard" class="nav-link shadow">My Appointment</a></li>
                     <li class="navbar-item"><a href="?view=about" class="nav-link shadow">About Us</a></li>
-                    <li class="navbar-item"><a href="" class="nav-link shadow" onclick="help()">Help</a></li>
+                    <li class="navbar-item"><a href="#help" class="nav-link shadow">Help</a></li>
                 </ul>
             </div>
         </nav>

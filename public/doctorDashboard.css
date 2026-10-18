@@ -31,7 +31,9 @@
 
     /* Sidebar Navigation */
     .sidebar {
+      position: fixed;
       width: 250px;
+      height: auto;
       background-color: rgb(46, 75, 75);
       border-right: 2px solid var(--border-color);
       padding: 20px 15px;
@@ -116,6 +118,7 @@
     .main-content {
       flex: 1;
       overflow-y: scroll;
+      margin-left: 230px;
       scrollbar-width: none;
       padding: 25px 35px;
       overflow-y: auto;
@@ -333,6 +336,7 @@
     .main-content {
         width: 100%;
         padding: 20px 15px;
+        margin: 0;
     }
 
     /* Header */

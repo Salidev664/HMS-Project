@@ -241,7 +241,7 @@
 
         <!-- Form Actions -->
         <div class="button-group">
-         <a href="adminDashboard.php"> <button type="button" class="btn btn-cancel">close</button></a>
+         <a href="?view=adminDashboard"> <button type="button" class="btn btn-cancel">close</button></a>
           <button type="submit" class="btn btn-register" name="register">Register Doctor</button>
         </div>
 

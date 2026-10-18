@@ -9,7 +9,7 @@ class Database{
 
     public function __construct(){
 
-    $ds = 'mysql:host =' . $this->host.';dbname=' . $this->dbName.';charset=utf8';
+    $ds = 'mysql:host='.$this->host. ';dbname=' . $this->dbName.';charset=utf8';
 
     //options 
     $option = array(

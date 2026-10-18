@@ -44,7 +44,7 @@ include __DIR__ . '/../share/header.php';
         </div>
     </div>
    <!---------the card section--------->
-   <div class="container-fluid mt-5" id="card_section">
+   <div class="container-fluid mt-5" id="doctor">
     <div class="row justify-content-center">
         <h3 class="ms-3" id="today-head">AVAILABLE TODAY</h3>
         <h1 class="ms-3">Doctors ready to see you</h1>
@@ -172,7 +172,7 @@ include __DIR__ . '/../share/header.php';
    </div>
 
    <!--------------the process section ---------------->
-   <div class="row mt-5 row-process" id="help_section">
+   <div class="row mt-5 row-process" id="help" >
 
         <h2 id="process" class="ms-3">process</h2>
         <h1 class="ms-3">Three steps to your appointment</h1>
